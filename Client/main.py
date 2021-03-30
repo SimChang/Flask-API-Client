@@ -169,6 +169,27 @@ get_btn1.grid(column=0, row=7)
 """Remove Events"""
 tab_control.add(delete_tab, text='Delete Events')
 
+del_lbl1 = Label(delete_tab, text='Event name (full): ', padx=10, pady=10)
+del_lbl1.grid(column=0, row=0)
+
+del_txt1 = Entry(delete_tab, width=30)
+del_txt1.grid(column=1, row=0)
+
+
+def del_btn_clicked():
+    url = base_url + "event/remove_events"
+
+    body = {
+        'name_list': [del_txt1.get()],
+    }
+
+    req = requests.delete(url, json=body)
+
+    messagebox.showinfo('Validation message', str(req.status_code) + " - " + req.json()["message"])
+
+
+del_btn1 = Button(delete_tab, text="delete event", command=del_btn_clicked, padx=10, pady=10)
+del_btn1.grid(column=0, row=4)
 
 tab_control.pack(expand=1, fill='both')
 window.mainloop()
